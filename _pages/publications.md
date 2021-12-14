@@ -2,12 +2,13 @@
 layout: page
 permalink: /publications/
 title: publications 
-description: publications by categories in reversed chronological order. (* denotes equal contribution)
+description: Publications by categories in reversed chronological order. (* denotes equal contribution)
 years: [2021, 2020, 2019, 2018]
 submitted_years: [2022]
 nav: true
 ---
 
+<h4>Please see <a href="../assets/pdf/CV.pdf"> CV </a> for list of works in submission.</h4>
 
 <h3>Published works:</h3>
 
