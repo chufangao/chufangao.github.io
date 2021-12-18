@@ -24,6 +24,8 @@ Previously, I obtained my bachelors in Computer Science / Statistical Mathematic
 
 Please check out my [full CV](../assets/pdf/CV.pdf) for a complete list of my activities! Feel free to reach out via the social links at the bottom of the page for further inquiries.
 
+The following is a list of selected publications, please see [Publications](https://chufangao.github.io/publications/) for a complete list of all of my works.
+
 
 <!-- Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
 
