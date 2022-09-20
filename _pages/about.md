@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-description: <a href="https://www.ri.cmu.edu/ri-people/chufan-gao/">Master of Science in Robotics @ Carnegie Mellon University</a>
+<!-- description: <a href="https://www.ri.cmu.edu/ri-people/chufan-gao/">Master of Science in Robotics @ Carnegie Mellon University</a> -->
 
 profile:
   align: right
