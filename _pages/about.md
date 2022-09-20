@@ -17,11 +17,11 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-I am an incoming CS PhD Student at University of Illinois at Urbana-Champaign supervised by Professor [Jimeng Sun](https://cs.illinois.edu/about/people/faculty/jimeng)
+I am a Computer Science PhD Student at University of Illinois at Urbana-Champaign advised by Professor [Jimeng Sun](https://cs.illinois.edu/about/people/faculty/jimeng). My areas of focus include Weak Supervision, Natural Language Processing, and Machine Learning for Healthcare in general. I am also broadly interested in time-series data and less than supervised Machine Learning.
 
-Currently, I am a staff researcher and 2nd year Masters Student (2020-2022) at Carnegie Mellon University with [Professor Artur Dubrawski](https://www.ri.cmu.edu/ri-faculty/artur-w-dubrawski/) under the [Auton Lab](https://www.ri.cmu.edu/robotics-groups/auton-lab/). My areas of focus include Weak Supervision, Unsupervised Feature Representations, and Machine Learning for Healthcare in general. I am also broadly interested in sequential data and Generative Adversarial Networks.
+Previously, I was a staff researcher and Masters Student (2020-2022) at Carnegie Mellon University advised by [Professor Artur Dubrawski](https://www.ri.cmu.edu/ri-faculty/artur-w-dubrawski/) under the [Auton Lab](https://www.ri.cmu.edu/robotics-groups/auton-lab/). 
 
-Previously, I obtained my bachelors in Computer Science / Statistical Mathematics from [Purdue University](https://www.stat.purdue.edu/news/2019/spring2019_graduation.html) (2016-2019)
+I obtained my bachelors in Computer Science / Statistical Mathematics from [Purdue University](https://www.stat.purdue.edu/news/2019/spring2019_graduation.html) (2016-2019)
 
 Please check out my [full CV](../assets/pdf/CV.pdf) for a complete list of my activities! Feel free to reach out via the social links at the bottom of the page for further inquiries.
 
