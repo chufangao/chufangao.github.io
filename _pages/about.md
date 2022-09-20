@@ -8,9 +8,8 @@ profile:
   align: right
   image: prof_pic.jpg
   address: >
-    <p>chufang[AT]andrew[DOT]cmu[DOT]edu</p>
-    <p>3127 Newell Simon Hall, Hamerschlag Dr</p>
-    <p>Pittsburgh, PA 15213</p>
+    <p>chufan2[AT]illinois[DOT]edu</p>
+    <p>Urbana, IL, USA</p>
 
 news: false  # includes a list of news items
 selected_papers: false # includes a list of papers marked as "selected={true}"
