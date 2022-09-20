@@ -19,7 +19,7 @@ social: true  # includes social icons at the bottom of the page
 
 I am a Computer Science PhD Student at University of Illinois at Urbana-Champaign advised by Professor [Jimeng Sun](https://cs.illinois.edu/about/people/faculty/jimeng). My areas of focus include Weak Supervision, Natural Language Processing, and Machine Learning for Healthcare in general. I am also broadly interested in time-series data and less than supervised Machine Learning.
 
-Previously, I was a staff researcher and Masters Student (2020-2022) at Carnegie Mellon University advised by [Professor Artur Dubrawski](https://www.ri.cmu.edu/ri-faculty/artur-w-dubrawski/) under the [Auton Lab](https://www.ri.cmu.edu/robotics-groups/auton-lab/). 
+Previously, I was a Research Associate and Masters Student (2020-2022) at Carnegie Mellon University advised by [Professor Artur Dubrawski](https://www.ri.cmu.edu/ri-faculty/artur-w-dubrawski/) under the [Auton Lab](https://www.ri.cmu.edu/robotics-groups/auton-lab/). My thesis was [Addressing Time-series Signal Quality in Healthcare Data](https://www.ri.cmu.edu/publications/addressing-time-series-signal-quality-in-healthcare-data/).
 
 I obtained my bachelors in Computer Science / Statistical Mathematics from [Purdue University](https://www.stat.purdue.edu/news/2019/spring2019_graduation.html) (2016-2019)
 
