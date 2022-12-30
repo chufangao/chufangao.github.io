@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://chufangao.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chufangao.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-12-30T02:16:08+00:00</updated><id>https://chufangao.github.io/feed.xml</id><title type="html">blank</title><subtitle>Personal Homepage (Based on [*folio](https://github.com/bogoli/-folio) design.)
+</subtitle><entry><title type="html">Fractal Tree Generator</title><link href="https://chufangao.github.io/blog/2019/diagrams/" rel="alternate" type="text/html" title="Fractal Tree Generator" /><published>2019-12-20T00:00:00+00:00</published><updated>2019-12-20T00:00:00+00:00</updated><id>https://chufangao.github.io/blog/2019/diagrams</id><content type="html" xml:base="https://chufangao.github.io/blog/2019/diagrams/"><![CDATA[<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <!-- <script src="tree.js" type="text/javascript"></script> -->
+    <script>
+        $(document).ready(function () {
+            function randInt(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(Math.random() * (max - min)) +
+                    min; //The maximum is exclusive and the minimum is inclusive
+            }
+            //returns randomized koch curve
+            function random_koch(left, right, displacement, roughness, array) {
+                if ((left + 1) == right) {
+                    return;
+                }
+                var mid = Math.floor((left + right) / 2);
+                var change = ((Math.random() * 2) - 1) * displacement;
+                array[mid] = ((array[left] + array[right]) / 2 + change);
+                displacement = displacement * roughness
+
+                random_koch(left, mid, displacement, roughness, array);
+                random_koch(mid, right, displacement, roughness, array);
+            }
+
+            function drawline(ctx, p1, p2, color) {
+                // ctx = document.getElementById("myCanvas").getContext("2d");
+                ctx.strokeStyle = color;
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+            }
+
+            function draw_lines(array, screen, point1, point2, color) {
+                //solve line equation
+                var unit_vector;
+                if (point1.x == point2.x) //vertical line
+                    unit_vector = {
+                        x: 1,
+                        y: 0
+                    };
+                else {
+                    var m = (point1.y - point2.y) / (point1.x - point2.x);
+                    var b = (point1.y - (m * point1.x))
+                    if (m == 0) //horizontal line
+                        unit_vector = {
+                            x: 0,
+                            y: 1
+                        };
+                    else { //avoid divide by zero 
+                        //solve for perpendicular line equation
+                        var pm = -1 / m;
+                        var pb = point1.y - (pm * point1.x);
+                        //find another point on perpendicular line
+                        var x2 = 2;
+                        var y2 = (pm * x2) + pb;
+                        //find the unit vector
+                        var vector = {
+                            x: point1.x - x2,
+                            y: point1.y - y2
+                        };
+                        var vector_length = Math.sqrt((vector.x * vector.x) + (vector.y * vector.y));
+                        var unit_vector = {
+                            x: vector.x / vector_length,
+                            y: vector.y / vector_length
+                        };
+                    }
+                }
+
+                //draw line between two points
+                var length;
+                if (point1.x == point2.x || m == 0) //vert or hor
+                    length = Math.sqrt(Math.pow((point2.x - point1.x), 2) + Math.pow((point2.y - point1.y), 2));
+                else
+                    length = Math.abs(point2.x - point1.x);
+
+                var increment = length / array.length;
+                var point_arr = new Array();
+                for (var i = 0; i < array.length; i++)
+                    point_arr.push({
+                        x: 0,
+                        y: 0
+                    });
+
+                var x, y, x2, y2;
+                for (i = 0; i < array.length - 1; i++) {
+                    if (point1.x == point2.x) { //vertical
+                        if (point1.y > point2.y) { //point 1 is lower
+                            x = point1.x;
+                            y = (i * increment) + point2.y;
+                            x2 = point2.x;
+                            y2 = (i + 1) * increment + point2.y;
+                        } else {
+                            x = point1.x;
+                            y = (i * increment) + point1.y;
+                            x2 = point2.x;
+                            y2 = (i + 1) * increment + point1.y;
+                        }
+                    } else {
+                        if (point1.x < point2.x) {
+                            x = (i * increment) + point1.x;
+                            y = (m * x) + b;
+                            x2 = (i + 1) * increment + point1.x;
+                            y2 = m * x2 + b;
+                        } else {
+                            x = -((i * increment) - point1.x);
+                            y = ((m * x) + b);
+                            x2 = -((i + 1) * increment - point1.x);
+                            y2 = (m * x2 + b);
+                        }
+                    }
+
+                    //the array is the displacement perpendicular from the line
+                    var scaled_v = {
+                        x: unit_vector.x * array[i],
+                        y: unit_vector.y * array[i]
+                    };
+                    var scaled_v2 = {
+                        x: unit_vector.x * array[i + 1],
+                        y: unit_vector.y * array[i + 1]
+                    };
+                    var xn = x + scaled_v.x;
+                    var yn = y + scaled_v.y;
+                    var xn2 = x2 + scaled_v2.x;
+                    var yn2 = y2 + scaled_v2.y;
+
+                    point_arr[i].x = xn;
+                    point_arr[i].y = yn;
+                    point_arr[i + 1].x = xn2;
+                    point_arr[i + 1].y = yn2;
+
+                    drawline(screen, {
+                        x: xn,
+                        y: yn
+                    }, {
+                        x: xn2,
+                        y: yn2
+                    }, color);
+                }
+                return (point_arr);
+            };
+
+            class Tree {
+                constructor(center = null, length = null, thickness = null, theta = null, color = "#4E90EC",
+                    screen) {
+                    this.center = center;
+                    this.length = length;
+                    this.thickness = thickness;
+                    this.theta = theta;
+                    this.color = color;
+                    this.screen = screen;
+
+                    this.trunk_length = Math.round((Math.random() * (.5 - .3) + .5) * length);
+                    this.screen.fillStyle = this.color;
+                }
+
+                draw_flower(center, length, ctx) {
+                    // let ctx = this.screen;
+                    // ctx.fillStyle = this.color;
+                    ctx.fillRect(center.x, center.y, length, length);
+                }
+
+                //the start theta defines the current planes rotation
+                random_flower(center, olength, thickness, start_theta) {
+                    thickness = thickness * 0.8;
+                    var num_branch = randInt(0, 5);
+                    var interval;
+                    if (num_branch > 0)
+                        interval = olength / (num_branch);
+                    else
+                        interval = 0;
+                    var spot = interval;
+
+                    //make the top branch off many times
+                    for (var i = 0; i < randInt(1, 3); i++) {
+                        var theta = (randInt(50, 100) / 100) * (Math.PI / 4);
+                        if (olength > 2) { //stop branching
+                            var length = olength * randInt(50, 70) / 100;
+                            var random_bin = randInt(0, 2);
+                            var new_theta;
+                            if (random_bin == 1)
+                                new_theta = start_theta - theta;
+                            else
+                                new_theta = start_theta + theta;
+
+                            //draw branch
+                            var new_point = {
+                                x: center.x + (length * Math.cos(new_theta)),
+                                y: center.y - (length * Math.sin(new_theta))
+                            };
+                            if (length > 30) {
+                                var array = new Array(31).join('0').split('').map(parseFloat);
+                                random_koch(0, 29, 5, 0.5, array);
+                                draw_lines(array, this.screen, center, new_point, this.color);
+                            } else {
+                                drawline(this.screen, center, new_point, this.color);
+                            }
+                            //continue branch left and right
+                            this.random_flower(new_point, length, thickness, new_theta);
+                        }
+                    }
+
+                    for (var i = 0; i < num_branch - 1; i++) { //randomize the number of branches 
+                        theta = randInt(50, 100) / 100 * Math.PI / 4;
+                        if (olength < 2) { //stop branching, flower
+                            this.draw_flower(center, thickness, this.screen);
+                        } else {
+                            var current_center = {
+                                x: center.x - (spot * Math.cos(start_theta)),
+                                y: center.y + (spot * Math.sin(start_theta))
+                            };
+                            spot = spot + interval;
+                            length = olength * randInt(50, 70) / 100;
+                            random_bin = randInt(0, 2);
+                            if (random_bin == 1)
+                                new_theta = start_theta - theta;
+                            else
+                                new_theta = start_theta + theta;
+
+                            //draw branch
+                            new_point = {
+                                x: current_center.x + length * Math.cos(new_theta),
+                                y: current_center.y - length * Math.sin(new_theta)
+                            };
+                            if (length > 30) {
+                                var array = new Array(31).join('0').split('').map(parseFloat);
+                                random_koch(0, 29, 5, 0.5, array);
+                                draw_lines(array, this.screen, current_center, new_point, thickness, this
+                                    .color)
+                            } else {
+                                drawline(this.screen, current_center, new_point, this.color);
+                            }
+
+                            //continue branch left and right
+                            this.random_flower(new_point, length, thickness, new_theta);
+                        }
+                    }
+                }
+
+                draw_tree() {
+                    var two_variation = (Math.floor((Math.random() * 50)) + 70) / 100 * 2;
+                    var branch_trunk = this.trunk_length / two_variation; //branches along top half of trunk
+                    var branchless_trunk = this.trunk_length - branch_trunk;
+                    var num_branch = randInt(1, 2);
+                    var increment = branch_trunk /
+                        num_branch; //place branches along trunk on this increment
+
+                    for (var i = 0; i < num_branch; i++) {
+                        var placement = branchless_trunk + (increment * i * Math.random());
+                        //place random branching along spot on trunk
+                        var branch_center = {
+                            x: this.center.x,
+                            y: this.center.y - placement
+                        };
+                        this.random_flower(branch_center, placement * 0.7, 2, (Math.PI / 2));
+                    }
+
+                    //top of the tree
+                    var new_center = {
+                        x: this.center.x,
+                        y: this.center.y - this.trunk_length
+                    };
+
+                    //draw a rickety trunk
+                    var array = new Array(31).join('0').split('').map(parseFloat);
+                    random_koch(0, 29, 5, 0.5, array);
+                    draw_lines(array, this.screen, this.center, new_center, this.thickness, this.color);
+                    this.random_flower(new_center, branch_trunk, this.thickness, (Math.PI / 2));
+                }
+            }
+
+            function drawtrees(totTrees = 2, color = "") {
+                canvas = document.getElementById("myCanvas");
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+
+                // draw trees
+                // let totTrees = 2;
+                for (let i = 0; i < totTrees; i++) {
+                    if (color === "") {
+                        rand_color = "#" + Math.random().toString(16).slice(2, 8);
+                    } else
+                        rand_color = color;
+                    new Tree({
+                            x: Math.random() * canvas.width,
+                            y: canvas.height
+                        },
+                        Math.round(canvas.height * 5 / 6),
+                        10,
+                        Math.PI / 2,
+                        rand_color,
+                        document.getElementById("myCanvas").getContext("2d")).draw_tree();
+                }
+
+                // draw the ground 
+                var array = new Array(20).join('0').split('').map(parseFloat);
+                random_koch(0, 18, 50, 0.75, array);
+                ctx = document.getElementById("myCanvas").getContext("2d");
+                ctx.beginPath();
+                ctx.moveTo(0, canvas.height - 30);
+                var x_inc = canvas.width / array.length;
+                for (var i = 0; i < array.length; i++) {
+                    ctx.lineTo(x_inc * i, canvas.height - Math.abs(array[i]) - 30)
+                }
+                // complete the square
+                if (color === "") {
+                    rand_color = "#" + Math.random().toString(16).slice(2, 8);
+                } else
+                    rand_color = color;
+                ctx.fillStyle = rand_color;
+                ctx.lineTo(canvas.width, canvas.height);
+                ctx.lineTo(0, canvas.height);
+                ctx.lineTo(0, canvas.height - 30);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            drawtrees();
+            $(".submit").click(function () {
+                // console.log(Math.min($('#in_numtrees').val(), 50), $('#in_color').val());
+                drawtrees(totTrees = Math.min($('#in_numtrees').val(), 50), color = $('#in_color')
+                    .val());
+                // return false;
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <p> Try refreshing the page, changing the color, or chaning the number of trees! 
+    </p>
+    <form>
+        <div class="form-row">
+            <div class="col-md-4 mb-3">
+                <label for="in_numtrees">Number of trees</label>
+                <input type="text" class="form-control" id="in_numtrees" value="2" placeholder="2" />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="in_color">Color (blank=random)</label>
+                <input type="text" class="form-control" id="in_color" placeholder="#4E90EC" />
+            </div>
+            <button type="button" class="submit btn btn-primary">Generate</button>
+        </div>
+    </form>
+    <div class="row">
+        <canvas id="myCanvas" style="height:400px; width:100%"></canvas>
+    </div>
+</body>]]></content><author><name></name></author><category term="weird" /><category term="art" /><summary type="html"><![CDATA[Fractal tree generating code. I limited it to 50 trees for crashing reasons lol. Full code is in this current html file if you're curious about the inner workings. Much thanks to Eura for the base tree code!]]></summary></entry><entry><title type="html">a post with images</title><link href="https://chufangao.github.io/blog/2017/hello-art/" rel="alternate" type="text/html" title="a post with images" /><published>2017-05-15T00:00:00+00:00</published><updated>2017-05-15T00:00:00+00:00</updated><id>https://chufangao.github.io/blog/2017/hello-art</id><content type="html" xml:base="https://chufangao.github.io/blog/2017/hello-art/"><![CDATA[<p>I’ve always liked art. I like to think that in another life, one where I had never discovered AI or computer science in general, I could have rebelled against them and been a proper starving artist in the heart of New York City. Art is pretty cool, right?</p>
+
+<p>My art adventure started off with regular citiscapes, transforming royalty free images of cities from google images into the following.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/00b65d3a-7ec7-4de2-8093-a901833bf438/dazxz0p-b1d20427-0d7e-41ca-a597-5210f37066a9.jpg/v1/fill/w_1024,h_1326,q_75,strp/city_by_its_trivial_dazxz0p-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTMyNiIsInBhdGgiOiJcL2ZcLzAwYjY1ZDNhLTdlYzctNGRlMi04MDkzLWE5MDE4MzNiZjQzOFwvZGF6eHowcC1iMWQyMDQyNy0wZDdlLTQxY2EtYTU5Ny01MjEwZjM3MDY2YTkuanBnIiwid2lkdGgiOiI8PTEwMjQifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.SYaeyRlNRM7xXG9unxYXGyJKyZ2K30Gi5epPFLpoPV8" class="img-fluid rounded z-depth-1" data-zoomable="true" />
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/00b65d3a-7ec7-4de2-8093-a901833bf438/db99kak-678376ab-4357-4920-84bf-fd9e4175d44d.jpg/v1/fill/w_1024,h_576,q_75,strp/blue_in_the_city_by_its_trivial_db99kak-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTc2IiwicGF0aCI6IlwvZlwvMDBiNjVkM2EtN2VjNy00ZGUyLTgwOTMtYTkwMTgzM2JmNDM4XC9kYjk5a2FrLTY3ODM3NmFiLTQzNTctNDkyMC04NGJmLWZkOWU0MTc1ZDQ0ZC5qcGciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.DIRKBVicGujB3oD1hmtCWfG6V7rZY6Bppmfam5hZzbc" class="img-fluid rounded z-depth-1" data-zoomable="true" />
+    </div>    
+</div>
+<div class="caption">
+    Examples of art on the same base city image.
+</div>
+
+<p>However, I very quickly experimented with other subjects. For example here is a gif of Nicholas Cage and an elephant:</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/00b65d3a-7ec7-4de2-8093-a901833bf438/ddhd97k-6760ffca-2371-4170-8aff-09684c818a25.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzAwYjY1ZDNhLTdlYzctNGRlMi04MDkzLWE5MDE4MzNiZjQzOFwvZGRoZDk3ay02NzYwZmZjYS0yMzcxLTQxNzAtOGFmZi0wOTY4NGM4MThhMjUuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.mZwYwGrTdayNKlNxJlyA1JdMgzG59KeErdsUFQV4xkY" class="img-fluid rounded z-depth-1" data-zoomable="true" />
+    </div>
+</div>
+
+<p>I have some more experiemental images on my 
+<a href="https://www.deviantart.com/its-trivial">Deviantart</a></p>
+
+<!-- ---
+
+I've always liked art. I like to think that in another life, one where I had never discovered AI or computer science in general, I could have rebelled against them and been a proper starving artist in the heart of New York City. Art is pretty cool, right? 
+
+My art adventure started off with regular citiscapes, transforming royalty free images of cities from google images into the following.
+
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/00b65d3a-7ec7-4de2-8093-a901833bf438/dazxz0p-b1d20427-0d7e-41ca-a597-5210f37066a9.jpg/v1/fill/w_1024,h_1326,q_75,strp/city_by_its_trivial_dazxz0p-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTMyNiIsInBhdGgiOiJcL2ZcLzAwYjY1ZDNhLTdlYzctNGRlMi04MDkzLWE5MDE4MzNiZjQzOFwvZGF6eHowcC1iMWQyMDQyNy0wZDdlLTQxY2EtYTU5Ny01MjEwZjM3MDY2YTkuanBnIiwid2lkdGgiOiI8PTEwMjQifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.SYaeyRlNRM7xXG9unxYXGyJKyZ2K30Gi5epPFLpoPV8" width="100%">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/00b65d3a-7ec7-4de2-8093-a901833bf438/db99kak-678376ab-4357-4920-84bf-fd9e4175d44d.jpg/v1/fill/w_1024,h_576,q_75,strp/blue_in_the_city_by_its_trivial_db99kak-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTc2IiwicGF0aCI6IlwvZlwvMDBiNjVkM2EtN2VjNy00ZGUyLTgwOTMtYTkwMTgzM2JmNDM4XC9kYjk5a2FrLTY3ODM3NmFiLTQzNTctNDkyMC04NGJmLWZkOWU0MTc1ZDQ0ZC5qcGciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.DIRKBVicGujB3oD1hmtCWfG6V7rZY6Bppmfam5hZzbc" width="100%">
+
+However, I very quickly experimented with other subjects. For example here is a gif of Nicholas Cage and an elephant:
+
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/00b65d3a-7ec7-4de2-8093-a901833bf438/ddhd97k-6760ffca-2371-4170-8aff-09684c818a25.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzAwYjY1ZDNhLTdlYzctNGRlMi04MDkzLWE5MDE4MzNiZjQzOFwvZGRoZDk3ay02NzYwZmZjYS0yMzcxLTQxNzAtOGFmZi0wOTY4NGM4MThhMjUuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.mZwYwGrTdayNKlNxJlyA1JdMgzG59KeErdsUFQV4xkY" width="100%">
+
+<!-- Here is my friend with his face removed:
+
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/00b65d3a-7ec7-4de2-8093-a901833bf438/ddhd95l-672c5f45-7c59-4d76-8a64-16525a48318f.jpg/v1/fill/w_1032,h_774,q_70,strp/man_by_its_trivial_ddhd95l-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9OTYwIiwicGF0aCI6IlwvZlwvMDBiNjVkM2EtN2VjNy00ZGUyLTgwOTMtYTkwMTgzM2JmNDM4XC9kZGhkOTVsLTY3MmM1ZjQ1LTdjNTktNGQ3Ni04YTY0LTE2NTI1YTQ4MzE4Zi5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.a61xplC8SmwFMZ7CUxRPpkvxCdUUIC9PO-9DDLJnPQI" width="100%">
+
+Of course, this is extremely unrealistic and abstract, that skin is too smooth.
+
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/00b65d3a-7ec7-4de2-8093-a901833bf438/ddhd93z-d081d597-7ae8-47c4-b197-54faa8afdd79.jpg/v1/fill/w_1032,h_774,q_70,strp/puberty_man_by_its_trivial_ddhd93z-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9OTYwIiwicGF0aCI6IlwvZlwvMDBiNjVkM2EtN2VjNy00ZGUyLTgwOTMtYTkwMTgzM2JmNDM4XC9kZGhkOTN6LWQwODFkNTk3LTdhZTgtNDdjNC1iMTk3LTU0ZmFhOGFmZGQ3OS5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.2YbrN9s5VXHGKXnxLAu9YDAg8GYM3orxMOENkvNhRo0" width="100%">
+
+There, much better. -->
+
+<!-- I have some more experiemental images on my 
+<a href="https://www.deviantart.com/its-trivial">Deviantart</a> -->]]></content><author><name></name></author><category term="weird" /><category term="art" /><summary type="html"><![CDATA[this is what included images could look like]]></summary></entry></feed>
