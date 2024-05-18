@@ -31,11 +31,23 @@
         margin-top: 1em;
         font-size: 1.1em;
     }
+    .background {
+        /* z-index:-5; */
+        /* position: relative; */
+        background-color: #ffffff;
+        opacity: 0.2;
+        background-image:  linear-gradient(#cfcfcf 2px, transparent 2px), linear-gradient(90deg, #cfcfcf 2px, transparent 2px), linear-gradient(#cfcfcf 1px, transparent 1px), linear-gradient(90deg, #cfcfcf 1px, #ffffff 1px);
+        background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+        background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;    
+    }
+
     /* $thumbnail-padding: 10.25rem; */
   </style>
 </head>
 <body>
 
+<!-- add background to back -->
+<div class="background" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
 
 <!-- Navigation -->
 
@@ -153,7 +165,7 @@
                     laborum</p> -->
             </div>
 
-            <h2 id="experiences">Experiences</h2>         
+            <h2 id="experiences">Internship Experiences</h2>         
             <ul>
                 <!-- <li class="experience">
                     <b>NLP Research Intern</b> <br>
@@ -163,18 +175,33 @@
                 </li> -->
                 <li class="experience">
                     <img src="https://upload.wikimedia.org/wikipedia/en/0/08/Medidata_Logo.png" alt="Medidata Solutions" style="max-width: 8em;"><br> 
-                    <b><a href="https://www.medidata.com/en/" class="link-primary link-underline-opacity-0">Medidata Solutions (Dassault Systèmes)</a> Research Intern</b><br>
-                     Summer 2023 <br>
+                    <b>Research Intern @ <a href="https://www.medidata.com/en/" class="link-primary link-underline-opacity-0">Medidata Solutions (Dassault Systèmes)</a></b><br>
+                    New York, NY, Summer 2023 <br>
                     Synthetic clinical trial data generation <br>
                     Advised by Mandis Beigi and Afrah Shafquat <br>
                 </li>
             </ul>
 
             
-            <h2 id="publications">Publications</h2>                
+            <h2 id="publications">Selected Publications</h2>                
             <strong>Peer-reviewed</strong><br/>
             <ul>
-                <!-- \item Hanyin, W., \textbf{C. Gao}, C. Dantona, B. Hull, J. Sun "DRG-LLaMA: tuning LLaMA model to predict diagnosis related group for hospitalized patient," in Nature Digitial Medicine, 2024 -->
+                <li class="paper" words="add, your, keywords, here">
+                    <b>C. Gao*</b>, X. Wang, J. Sun, 
+                    <a href="" class="link-primary link-underline-opacity-0">
+                        "TTM-RE: Memory-Augmented Document-Level Relation Extraction,"
+                    </a> 
+                    in ACL, 2024
+                </li>
+
+                <li class="paper" words="add, your, keywords, here">
+                    Z. Wang*, <b>C. Gao*</b>, C. Xiao, J. Sun, 
+                    <a href="https://arxiv.org/abs/2305.12081" class="link-primary link-underline-opacity-0">
+                        "MediTab: Scaling Medical Tabular Data Predictors via Data Consolidation, Enrichment, and Refinement,"
+                    </a> 
+                    in IJCAI, 2024
+                </li>
+
                 <li class="paper" words="add, your, keywords, here">
                     Hanyin, W., <b>C. Gao</b>, C. Dantona, B. Hull, J. Sun, 
                     <a href="https://www.nature.com/articles/s41746-023-00989-3" class="link-primary link-underline-opacity-0">
@@ -182,21 +209,13 @@
                     </a> 
                     in Nature Digitial Medicine, 2024
                 </li>
-                
-                <!-- Shafquat, A., Mezey, J., Beigi, M., Sun, J., Gao, A., & Aptekar, J. W. (2023, July). An interpretable data augmentation framework for improving generative modeling of synthetic clinical trial data. In ICML 3rd Workshop on Interpretable Machine Learning in Healthcare (IMLH).-->
-                <li class="paper" words="add, your, keywords, here">
-                    Shafquat, A., Mezey, J., Beigi, M., Sun, J., <b>C. Gao</b>, & Aptekar, J. W. (2023, July). 
-                    <a href="https://openreview.net/forum?id=BZh0Eb2y2I" class="link-primary link-underline-opacity-0">
-                        "An interpretable data augmentation framework for improving generative modeling of synthetic clinical trial data."
-                    </a> 
-                    in ICML 3rd Workshop on Interpretable Machine Learning in Healthcare (IMLH), 2023
-                </li>
+            
     
                 <!-- \item \textbf{C. Gao}, N. Gisolfi, and A. Dubrawski, "Signal quality auditing for time-series data," in AAAI Fall Symposium: Artificial Intelligence for Predictive Maintenance, 2022,  \href{https://github.com/chufangao/signal_quality}{\textcolor{blue}{Code}} -->
                 <li class="paper" words="add, your, keywords, here">
                     <b>C. Gao</b>, N. Gisolfi, and A. Dubrawski,
                     <a href="https://arxiv.org/abs/2402.00803" class="link-primary link-underline-opacity-0">
-                        "Signal quality auditing for time-series data,"
+                        "Signal quality auditing for time-series data"
                     </a>
                     in AAAI Fall Symposium: Artificial Intelligence for Predictive Maintenance, 2022
                 </li>
@@ -219,46 +238,7 @@
                     </a>
                     in Machine Learning for Healthcare, 2022
                 </li>
-    
-                <!-- \item J. H. Yoon, \textbf{C. Gao}, J. Kim, J. H. Kim, T. Lagattuta, S. Helman, M. Hravnak, M. R. Pinsky, and G. Clermont, "Prediction of hypovolemic instability in normal volunteer blood donors using machine learning (Abstract)", in American Thoracic Society, 2022
-                        \href{https://www.atsjournals.org/doi/abs/10.1164/ajrccm-conference.2022.205.1_MeetingAbstracts.A1475}{\textcolor{blue}{Link}} -->
-                <li class="paper" words="add, your, keywords, here">
-                    J. H. Yoon, <b>C. Gao</b>, J. Kim, J. H. Kim, T. Lagattuta, S. Helman, M. Hravnak, M. R. Pinsky, and G. Clermont,
-                    <a href="https://www.atsjournals.org/doi/abs/10.1164/ajrccm-conference.2022.205.1_MeetingAbstracts.A1475" class="link-primary link-underline-opacity-0">
-                        "Prediction of hypovolemic instability in normal volunteer blood donors using machine learning (Abstract)"
-                    </a>
-                    in American Thoracic Society, 2022
-                </li>
-    
-                <!-- \item \textbf{C. Gao}, A. Dubrawski, M. Pinsky, G. Clermont, and J. Yoon, "Identification and explanation of severity of bleeding-induced hypovolemia using unsupervised deep learning (Abstract)", in American Thoracic Society, 2021     \href{https://www.atsjournals.org/doi/abs/10.1164/ajrccm-conference.2021.203.1_MeetingAbstracts.A2841}{\textcolor{blue}{Link}} -->
-                <li class="paper" words="add, your, keywords, here">
-                    <b>C. Gao</b>, A. Dubrawski, M. Pinsky, G. Clermont, and J. Yoon,
-                    <a href="https://www.atsjournals.org/doi/abs/10.1164/ajrccm-conference.2021.203.1_MeetingAbstracts.A2841" class="link-primary link-underline-opacity-0">
-                        "Identification and explanation of severity of bleeding-induced hypovolemia using unsupervised deep learning (Abstract)"
-                    </a>
-                    in American Thoracic Society, 2021
-                </li>
-    
-                <!-- \item M. Goswami, L. Chen, \textbf{C. Gao}, and A. Dubrawski, "Modeling involuntary dynamic behaviors to support intelligent tutoring (Student Abstract)," in AAAI
-                        \href{https://ojs.aaai.org/index.php/AAAI/article/view/7171}{\textcolor{blue}{Link}} -->
-                <li class="paper" words="add, your, keywords, here">
-                    M. Goswami, L. Chen, <b>C. Gao</b>, and A. Dubrawski,
-                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/7171" class="link-primary link-underline-opacity-0">
-                        "Modeling involuntary dynamic behaviors to support intelligent tutoring"
-                    </a>
-                    in AAAI Student Abstracts, 2021
-                </li>
-    
-                <!-- \item S. Peng, L. Chen, \textbf{C. Gao}, and R. J. Tong, "Predicting students’ attention level with interpretable facial and head dynamic features in an online tutoring system (Student Abstract)" in AAAI
-                        \href{https://ojs.aaai.org/index.php/AAAI/article/view/7220}{\textcolor{blue}{Link}} -->
-                <li class="paper" words="add, your, keywords, here">
-                    S. Peng, L. Chen, <b>C. Gao</b>, and R. J. Tong,
-                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/7220" class="link-primary link-underline-opacity-0">
-                        "Predicting students’ attention level with interpretable facial and head dynamic features in an online tutoring system"
-                    </a>
-                    in AAAI Student Abstracts, 2020
-                </li>
-    
+
                 <!-- \item \textbf{C. Gao}, F. Falck, M. Goswami, A. Wertz, M. R. Pinsky, and A. Dubrawski, "Detecting patterns of physiological response to hemodynamic stress via unsupervised deep learning," in NeurIPS ML4H Workshop, 2019
                         \href{https://arxiv.org/abs/1911.05121}{\textcolor{blue}{Link}} -->
                 <li class="paper" words="add, your, keywords, here">
@@ -281,27 +261,11 @@
             </ul>
             <strong>Technical Reports and Other Publications</strong><br/>
             <ul>
-                <li class="paper" words="add, your, keywords, here">
-                    <b>Gao, C.</b>, Wang, X., Sun, J. (2024). 
-                    <a href="" class="link-primary link-underline-opacity-0">
-                        "TTM-RE: Memory-Augmented Document-Level Relation Extraction"
-                    </a>
-                    In Submission, 2024
-                </li>
                 <!-- \item \textbf{Gao, C.}, Fan, X., Sun, J., Wang, X. (2023). "PromptRE: Weakly-Supervised Document-Level Relation Extraction via Prompting-Based Data Programming," 2023 \href{https://arxiv.org/pdf/2310.09265.pdf}{\textcolor{blue}{Link}} -->
                 <li class="paper" words="add, your, keywords, here">
                     <b>Gao, C.</b>, Fan, X., Sun, J., Wang, X. (2023). 
                     <a href="https://arxiv.org/pdf/2310.09265.pdf" class="link-primary link-underline-opacity-0">
                         "PromptRE: Weakly-Supervised Document-Level Relation Extraction via Prompting-Based Data Programming,"
-                    </a>
-                    In ArXiv, 2023
-                </li>
-    
-                <!-- \item Z. Wang* \textbf{C. Gao}* J. Sun AnyPredict: Foundation Model for Tabular Prediction \href{https://arxiv.org/pdf/2305.12081.pdf}{\textcolor{blue}{Link}} -->
-                <li class="paper" words="add, your, keywords, here">
-                    Z. Wang*, <b>C. Gao</b>*, J. Sun,
-                    <a href="https://arxiv.org/pdf/2305.12081.pdf" class="link-primary link-underline-opacity-0">
-                        "MediTAB: Scaling Medical Tabular Data Predictors via Data Consolidations, Enrichment, and Refinement"
                     </a>
                     In ArXiv, 2023
                 </li>
@@ -333,26 +297,7 @@
                     </a>
                     In ArXiv, 2022
                 </li>
-            
-                <!-- \item  \textbf{C. Gao}* and M. Goswami*, "The word is mightier than the label: Learning without pointillistic labels using data programming", 2021
-                \href{https://arxiv.org/abs/2108.10921}{\textcolor{blue}{Link}} -->
-                <li class="paper" words="add, your, keywords, here">
-                    <b>C. Gao</b>* and M. Goswami*,
-                    <a href="https://arxiv.org/abs/2108.10921" class="link-primary link-underline-opacity-0">
-                        "The word is mightier than the label: Learning without pointillistic labels using data programming"
-                    </a>
-                    In ArXiv, 2021
-                </li>
-            
-                <!-- \item \textbf{C. Gao}, "Out of the box: Impact of active learning on future student performance," The Journal of Purdue Undergraduate Research
-                        \href{https://docs.lib.purdue.edu/cgi/viewcontent.cgi?article=1342&context=jpur}{\textcolor{blue}{Link}}                     -->
-                <li class="paper" words="add, your, keywords, here">
-                    <b>C. Gao</b>, 
-                    <a href="https://docs.lib.purdue.edu/cgi/viewcontent.cgi?article=1342&context=jpur", class="link-primary link-underline-opacity-0">
-                        "Out of the box: Impact of active learning on future student performance."
-                    </a>
-                    In The Journal of Purdue Undergraduate Research, 2018
-                </li>
+
             </ul>
     
             <h2 id="miscellaneous">Miscellaneous</h2>
