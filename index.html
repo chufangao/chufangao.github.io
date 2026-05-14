@@ -12,7 +12,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <link href='https://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'> -->
   <style>
     body {
         font-size: 1em;
@@ -42,6 +41,18 @@
     }
 
     /* $thumbnail-padding: 10.25rem; */
+
+    body.night-mode {
+        background: #111;
+        color: #ddd;
+    }
+    body.night-mode .background {
+        background-color: #111;
+        background-image:  linear-gradient(#333 2px, transparent 2px), linear-gradient(90deg, #333 2px, transparent 2px), linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, #111 1px);
+    }
+    body.night-mode .link-primary {
+        color: #6ea8fe;
+    }
   </style>
 </head>
 <body>
@@ -69,7 +80,7 @@
                     <a style="color: #ffffff;" class="nav-link" href="#miscellaneous">Miscellaneous</a>
                 </li>
             </ul>
-
+            <button id="night-toggle" type="button" class="btn btn-sm btn-outline-light ms-auto me-3" aria-label="Toggle night mode">🌙</button>
         </div>
     </div>
 </nav>
@@ -97,7 +108,7 @@
             <!-- Links on the Sidebar -->
             <div class="mt-3">
                 <dd><a style="font-size: 1.1em" href="https://scholar.google.com/citations?user=rBlZICgAAAAJ&hl=en&inst=17953555581762502877" class="link-primary link-underline-opacity-0">
-                    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M11.5842 3.09053C11.8483 2.96982 12.1517 2.96982 12.4158 3.09053L22.4158 7.66195C22.7717 7.82467 23 8.18006 23 8.57143C23 8.96279 22.7717 9.31819 22.4158 9.4809L20 10.5853V16.4469C20 16.648 19.9495 16.8682 19.8221 17.0728C19.4914 17.6042 17.1726 21 12 21C6.82744 21 4.50856 17.6042 4.17785 17.0728C4.0505 16.8682 4 16.648 4 16.4469V10.5853L1.58424 9.4809C1.2283 9.31819 1 8.96279 1 8.57143C1 8.18006 1.2283 7.82467 1.58424 7.66195L11.5842 3.09053ZM6 11.4995V16.1994C6.48987 16.8789 8.31354 19 12 19C15.6865 19 17.5101 16.8789 18 16.1994V11.4995L12.4158 14.0523C12.1517 14.173 11.8483 14.173 11.5842 14.0523L6 11.4995ZM4.40524 8.57143L5.41576 9.03338L12 12.0433L18.5842 9.03338L19.5948 8.57143L12 5.09954L4.40524 8.57143ZM23.5 11.5C23.5 12.3284 22.8284 13 22 13C21.1716 13 20.5 12.3284 20.5 11.5C20.5 10.6716 21.1716 10 22 10C22.8284 10 23.5 10.6716 23.5 11.5ZM23 14.5C23 13.9477 22.5523 13.5 22 13.5C21.4477 13.5 21 13.9477 21 14.5V20C21 20.5523 21.4477 21 22 21C22.5523 21 23 20.5523 23 20V14.5Z" fill="#000000"></path> </g></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.5842 3.09053C11.8483 2.96982 12.1517 2.96982 12.4158 3.09053L22.4158 7.66195C22.7717 7.82467 23 8.18006 23 8.57143C23 8.96279 22.7717 9.31819 22.4158 9.4809L20 10.5853V16.4469C20 16.648 19.9495 16.8682 19.8221 17.0728C19.4914 17.6042 17.1726 21 12 21C6.82744 21 4.50856 17.6042 4.17785 17.0728C4.0505 16.8682 4 16.648 4 16.4469V10.5853L1.58424 9.4809C1.2283 9.31819 1 8.96279 1 8.57143C1 8.18006 1.2283 7.82467 1.58424 7.66195L11.5842 3.09053ZM6 11.4995V16.1994C6.48987 16.8789 8.31354 19 12 19C15.6865 19 17.5101 16.8789 18 16.1994V11.4995L12.4158 14.0523C12.1517 14.173 11.8483 14.173 11.5842 14.0523L6 11.4995ZM4.40524 8.57143L5.41576 9.03338L12 12.0433L18.5842 9.03338L19.5948 8.57143L12 5.09954L4.40524 8.57143ZM23.5 11.5C23.5 12.3284 22.8284 13 22 13C21.1716 13 20.5 12.3284 20.5 11.5C20.5 10.6716 21.1716 10 22 10C22.8284 10 23.5 10.6716 23.5 11.5ZM23 14.5C23 13.9477 22.5523 13.5 22 13.5C21.4477 13.5 21 13.9477 21 14.5V20C21 20.5523 21.4477 21 22 21C22.5523 21 23 20.5523 23 20V14.5Z"></path></svg>
                     Google Scholar</a></dd>
                 <dd><a style="font-size: 1.1em" href="https://github.com/chufangao/" class="link-primary link-underline-opacity-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
@@ -218,7 +229,6 @@
                 </li>
             
     
-                <!-- \item \textbf{C. Gao}, N. Gisolfi, and A. Dubrawski, "Signal quality auditing for time-series data," in AAAI Fall Symposium: Artificial Intelligence for Predictive Maintenance, 2022,  \href{https://github.com/chufangao/signal_quality}{\textcolor{blue}{Code}} -->
                 <li class="paper" words="add, your, keywords, here">
                     <b>C. Gao</b>, N. Gisolfi, and A. Dubrawski,
                     <a href="https://arxiv.org/abs/2402.00803" class="link-primary link-underline-opacity-0">
@@ -226,7 +236,7 @@
                     </a>
                     in AAAI Fall Symposium: Artificial Intelligence for Predictive Maintenance, 2022
                 </li>
-                <!-- \item \textbf{C. Gao}, "Addressing time-series signal quality in healthcare data," Master’s thesis, Carnegie Mellon University, \href{https://www.ri.cmu.edu/publications/addressing-time-series-signal-quality-in-healthcare-data/}{\textcolor{blue}{Link}} -->
+
                 <li class="paper" words="add, your, keywords, here">
                     <b>C. Gao</b>,
                     <a href="https://www.ri.cmu.edu/publications/addressing-time-series-signal-quality-in-healthcare-data/" class="link-primary link-underline-opacity-0">
@@ -235,9 +245,6 @@
                     Master's thesis, Carnegie Mellon University, 2022
                 </li>
     
-                <!-- \item \textbf{C. Gao}*, M. Goswami*, J. Chen, and A. Dubrawski, "Classifying unstructured clinical notes via automatic weak supervision," in Machine Learning for Healthcare, 2022. 
-                        \href{https://github.com/autonlab/KeyClass/}{\textcolor{blue}{Code}}
-                        \href{https://arxiv.org/abs/2206.12088}{\textcolor{blue}{Link}} -->
                 <li class="paper" words="add, your, keywords, here">
                     <b>C. Gao</b>*, M. Goswami*, J. Chen, and A. Dubrawski,
                     <a href="https://arxiv.org/abs/2206.12088" class="link-primary link-underline-opacity-0">
@@ -246,8 +253,6 @@
                     in Machine Learning for Healthcare, 2022
                 </li>
 
-                <!-- \item \textbf{C. Gao}, S. Clark, J. Furst, and D. Raicu, "Augmenting LIDC dataset using 3d generative adversarial networks to improve lung nodule detection," in SPIE Medical Imaging, 2019
-                        \href{https://www.researchgate.net/profile/Chufan-Gao/publication/331723419_Augmenting_LIDC_dataset_using_3D_generative_adversarial_networks_to_improve_lung_nodule_detection/links/5d2357a6299bf1547ca34e48/Augmenting-LIDC-dataset-using-3D-generative-adversarial-networks-to-improve-lung-nodule-detection.pdf}{\textcolor{blue}{Link}} -->
                 <li class="paper" words="add, your, keywords, here">
                     <b>C. Gao</b>, S. Clark, J. Furst, and D. Raicu,
                     <a href="https://www.researchgate.net/publication/331723419_Augmenting_LIDC_dataset_using_3D_generative_adversarial_networks_to_improve_lung_nodule_detection" class="link-primary link-underline-opacity-0">
@@ -287,6 +292,21 @@
 <!-- Other people may like it too! -->
 <a style="color:#b5bec9;font-size:0.8em; float:right;" href="https://github.com/mavroudisv/plain-academic">Plain Academic</a>
 
-</body>
+<script>
+    (function () {
+        var btn = document.getElementById('night-toggle');
+        var on = localStorage.getItem('nightMode') === 'on';
+        if (on) {
+            document.body.classList.add('night-mode');
+            btn.textContent = '☀️';
+        }
+        btn.addEventListener('click', function () {
+            var enabled = document.body.classList.toggle('night-mode');
+            localStorage.setItem('nightMode', enabled ? 'on' : 'off');
+            btn.textContent = enabled ? '☀️' : '🌙';
+        });
+    })();
+</script>
 
+</body>
 </html>
